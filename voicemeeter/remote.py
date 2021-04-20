@@ -86,7 +86,7 @@ class VMRemote(abc.ABC):
         for i in range(self.max_polls):
             time.sleep(self.delay)
 
-            if dll.VBVMR_IsParametersDirty() == 1:
+            if self.pdirty:
                 if param in self.cache:
                     return self.cache[param]
 
@@ -157,7 +157,7 @@ class VMRemote(abc.ABC):
         for i in range(self.max_polls):
             time.sleep(self.mdelay)
 
-            if dll.VBVMR_MacroButton_IsDirty() == 1:
+            if self.mdirty:
                 if param in self.cache:
                     return self.cache[param]
 
@@ -225,7 +225,7 @@ def _make_remote(kind) -> 'instanceof(VMRemote)':
 
 _remotes = {kind.id: _make_remote(kind) for kind in kinds.all}
 
-def connect(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=9):
+def connect(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=4):
     """ Connect to Voicemeeter and sets its strip layout. """
     try:
         cls = _remotes[kind_id]

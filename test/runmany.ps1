@@ -17,7 +17,7 @@ Function RunTests {
         $failures = $global:failures
         $firstrun = $false
 
-        if ($cycle_num -eq 100) { $firstrun = $true }
+        if ($cycle_num -eq 20) { $firstrun = $true }
 
         (Get-Content '__init__.py') | ForEach-Object {
                 $m = [regex]::Match($_, '^(DELAY)\s=\s(\d.\d+)')
@@ -60,20 +60,20 @@ Function RunTests {
 
                 $summary_file = "summary.log"
                 if ($firstrun -eq $true) {
-                "==========================================================`n" + `
+                "===========================================================`n" + `
                 "NOTES:" | Tee-Object -FilePath $summary_file -Append
                 }
-                "==========================================================`n" + `
+                "===========================================================`n" + `
                 "${num} test run with ${delay} delay, ${mdelay} mdelay and ${maxpolls} max_polls`n" + `
                 "Total failures: ${failures}`n" + `
                 "Logfile for this test run: ${log_backupfile}`n" + `
-                "==========================================================" | `
+                "===========================================================" | `
                 Tee-Object -FilePath $summary_file -Append
         } else {
-                "==========================================================",
+                "===========================================================",
                 "${num} test run with ${delay} delay, ${mdelay} mdelay and ${maxpolls} max_polls",
                 "Total failures: ${failures}",
-                "==========================================================" | Write-Host
+                "===========================================================" | Write-Host
         }
         $global:failures = $failures
 }
@@ -108,7 +108,7 @@ if ($MyInvocation.InvocationName -ne ".")
         & '..\venv_macros\Scripts\activate.ps1'
 
         if ($cycle) {
-                @(100, 200, 500, 1000) | ForEach-Object {
+                @(20, 50, 100, 200, 500, 1000) | ForEach-Object {
                         RunTests -cycle_num $_
                         if ($global:failures -gt 0) { break }
                 }

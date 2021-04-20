@@ -48,6 +48,7 @@ class IRecorder(abc.ABC):
         except UnicodeError:
             raise VMRError('File full directory must be a raw string')
 
+
 class Recorder(IRecorder):
     """ Recorder Concrete Class """
     def __init__(self, remote):
@@ -79,3 +80,4 @@ class Recorder(IRecorder):
 
     def rw(self, state: int=1):
         self.set('recorder.rew', state)
+

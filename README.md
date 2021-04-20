@@ -31,21 +31,21 @@ kind = 'potato'
 voicemeeter.launch(kind)
 
 with voicemeeter.remote(kind) as vmr:
-  # Set the mapping of the second input strip
-  vmr.inputs[1].A4 = True
-  print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A4}')
+    # Set the mapping of the second input strip
+    vmr.inputs[1].A4 = True
+    print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A4}')
 
-  # Set the gain slider of the leftmost output bus
-  vmr.outputs[0].gain = -6.0
+    # Set the gain slider of the leftmost output bus
+    vmr.outputs[0].gain = -6.0
 
-  # Also supports assignment through a dict
-  vmr.apply({
-    'in-5': dict(A1=True, B1=True, gain=-6.0),
-    'out-2': dict(mute=True)
-  })
+    # Also supports assignment through a dict
+    vmr.apply({
+        'in-5': dict(A1=True, B1=True, gain=-6.0),
+        'out-2': dict(mute=True)
+    })
 
-  # Resets all UI elements to a base profile
-  vmr.reset()
+    # Resets all UI elements to a base profile
+    vmr.reset()
 ```
 
 This wrapper runs within the context management protocol meaning it
@@ -122,7 +122,7 @@ A *kind* specifies a major Voicemeeter version. Currently this encompasses
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
 
-#### `voicemeeter.remote(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=9) -> 'instanceof(VMRemote)'`
+#### `voicemeeter.remote(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=4) -> 'instanceof(VMRemote)'`
 Factory function for remotes. 
 - delay applies to parameter getters 
 - mdelay applies to macrobutton getter
@@ -135,7 +135,7 @@ Returns a `VMRemote` based on the `kind_id`.
 Use it with a context manager
 ```python
 with voicemeeter.remote('potato') as vmr:
-  vmr.inputs[0].mute = True
+    vmr.inputs[0].mute = True
 ```
 
 ### `VMRemote` (higher level)
