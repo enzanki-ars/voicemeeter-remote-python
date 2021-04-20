@@ -14,9 +14,9 @@ _kind_map = {
 }
 
 def get(kind_id):
-  try:
-    return _kind_map[kind_id]
-  except KeyError:
-    raise VMRError(f'Invalid Voicemeeter kind: {kind_id}')
+    try:
+        return _kind_map[kind_id]
+    except KeyError:
+        raise VMRError(f'Invalid Voicemeeter kind: {kind_id}')
 
 all = list(_kind_map.values())

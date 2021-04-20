@@ -3,7 +3,10 @@ A Python API to [Voicemeeter](https://www.vb-audio.com/Voicemeeter/potato.htm), 
 
 This work-in-progress package wraps the [Voicemeeter Remote C API](https://forum.vb-audio.com/viewtopic.php?f=8&t=346) and provides a higher-level interface for developers.
 
-Tested against Voicemeeter Potato, release from September 2019.
+Tested against
+- Basic 1.0.7.8
+- Banana 2.0.5.8
+- Potato 3.0.1.8
 
 
 ## Prerequisites
@@ -43,6 +46,39 @@ with voicemeeter.remote(kind) as vmr:
 
   # Resets all UI elements to a base profile
   vmr.reset()
+```
+
+This wrapper runs within the context management protocol meaning it
+will automatically perform teardown (logout) once your code leaves
+the scope of the with statement. In order to access wrapper methods
+in other functions pass the object returned by the with statement to
+your function, for example:
+```python
+import voicemeeter
+
+# Can be 'basic', 'banana' or 'potato'
+kind = 'potato'
+
+# Ensure that Voicemeeter is launched
+voicemeeter.launch(kind)
+
+def do_things(vmr):
+    # Set the mapping of the second input strip
+    vmr.inputs[1].A3 = True
+    print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A3}')
+    vmr.inputs[1].A3 = False
+    print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A3}')
+
+def do_other_things(vmr):
+    # Set the gain slider of the leftmost output bus
+    vmr.outputs[0].gain = -6.0
+    print(vmr.outputs[0].gain)
+    vmr.outputs[0].gain = 3.0
+    print(vmr.outputs[0].gain)
+
+with voicemeeter.remote(kind) as vmr:
+    do_things(vmr)
+    do_other_things(vmr)
 ```
 
 ## Profiles
@@ -86,8 +122,16 @@ A *kind* specifies a major Voicemeeter version. Currently this encompasses
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
 
-#### `voicemeeter.remote(kind_id, delay=0.015)`
-Factory function for remotes. `delay` specifies a cooldown time after every command in seconds. Returns a `VMRemote` based on the `kind_id`.  
+#### `voicemeeter.remote(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=9) -> 'instanceof(VMRemote)'`
+Factory function for remotes. 
+- delay applies to parameter getters 
+- mdelay applies to macrobutton getter
+- max_polls defines the number of times pdirty and mdirty parameters are polled
+
+Occasionally it requires more than a single poll to determine whether parameters have been updated. The wrapper passes 1000 unit test runs
+cleanly with default values but if you wish to alter these settings you may do so with argument variables to voicemeeter.remote.
+
+Returns a `VMRemote` based on the `kind_id`.  
 Use it with a context manager
 ```python
 with voicemeeter.remote('potato') as vmr:
@@ -140,18 +184,65 @@ Any property is gettable and settable.
 ### `OutputBus`
 Any property is gettable and settable.
 - `mute`: boolean
+- `eq`: boolean
 - `gain`: float, from -60.0 to 12.0
 - `apply()`: Works similar to `vmr.apply()`
 
+### `Macrobuttons`
+Can be configured using three different modes: state, stateonly and trigger
+#### `vmr.button_state(id, state)`
+Set the state and execute the script for macrobutton by id
+#### `vmr.button_stateonly(id, state)`
+Set the current state but don't execute the script for the macrobutton by id
+#### `vmr.button_trigger(id, state)`
+Set trigger status for macrobutton by id
+- `id`: int, from 0 to 69
+- `state`: boolean
+
+Example:
+```python
+  # set macrobutton id 34 state to 1
+  vmr.button_state(34, 1)
+  # set macrobutton id 10 stateonly to 0  
+  vmr.button_stateonly(10, 0)
+  # set macrobutton id 17 trigger to 1  
+  vmr.button_trigger(17, 1)
+```
+
+### `Recorder`
+Example:
+```python
+  vmr.recorder.play()
+  vmr.recorder.stop()
+  vmr.recorder.pause()
+
+  # record, fw and rw until stopped
+  vmr.recorder.record()
+  vmr.recorder.ff()
+  vmr.recorder.rw()
+
+  # Enable loop play on
+  vmr.recorder.loop()
+
+  # Set recorder output channels
+  recorder.output(A1, 1)
+  recorder.output(B2, 0)
+
+  # Filepath must be a raw string (or escaped backslashes)
+  recorder.load(Filepath)
+```
+
 ### `VMRemote` (lower level)
-#### `vmr.dirty`
-`True` iff UI parameters have been updated. Use this if to poll for UI updates.
+#### `vmr.pdirty`
+`True` if UI parameters have been updated. Use this if to poll for UI updates.
+#### `vmr.mdirty`
+`True` if macrobutton parameters have been updated. Use this if to poll for MB updates.
 
 #### `vmr.get(param_name, string=False)`
 Calls the C API's parameter getters, `GetParameterFloat` or `GetParameterStringW` respectively. Tries to cache the value on the first call and updates the cached value if `vmr.dirty` is `True`.
 
 #### `vmr.set(param_name, value)`
-Calls the C API's parameter getters, `SetParameterFloat` or `SetParameterStringW` respectively.
+Calls the C API's parameter setters, `SetParameterFloat` or `SetParameterStringW` respectively.
 
 ### Errors
 - `errors.VMRError`: Base Voicemeeter Remote error class.
