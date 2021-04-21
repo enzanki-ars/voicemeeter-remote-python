@@ -9,7 +9,7 @@ from .output import OutputBus
 from .recorder import Recorder
 from . import kinds
 from . import profiles
-from .util import merge_dicts
+from .util import merge_dicts, p_polling, m_polling
 
 from typing import Union
 
@@ -81,18 +81,9 @@ class VMRemote(abc.ABC):
         val = self._call('MacroButton_IsDirty', expected=(0,1))
         return (val == 1)
  
+    @p_polling
     def get(self, param: str, string=False) -> Union[str, float]:
         """ Retrieves a parameter from cache if pdirty else run getter """
-        param = param.encode('ascii')
-        if param in self.cache and self.cache[param][0]:
-            self.cache[param][0] = False
-            for i in range(self.max_polls):
-                if self.pdirty:
-                    return self.cache[param][1]
-                time.sleep(self.delay)
-        elif param in self.cache and self.pdirty:
-            return self.cache[param][1]
-
         if string:
             buf = (ct.c_wchar * 512)()
             self._call('GetParameterStringW', param, ct.byref(buf))
@@ -100,19 +91,17 @@ class VMRemote(abc.ABC):
             buf = ct.c_float()
             self._call('GetParameterFloat', param, ct.byref(buf))
 
-        self.cache[param] = [False, buf.value]
-
-        return self.cache[param][1]
+        return buf.value
 
     def set(self, param: str, val: Union[str, float]):
         """ Updates a parameter. Attempts to cache value """
-        param = param.encode('ascii')
+        p = param
         if isinstance(val, str):
             if len(val) >= 512:
                 raise VMRError('String is too long')
-            self._call('SetParameterStringW', param, ct.c_wchar_p(val))
+            self._call('SetParameterStringW', p.encode('ascii'), ct.c_wchar_p(val))
         else:
-            self._call('SetParameterFloat', param, ct.c_float(float(val)))
+            self._call('SetParameterFloat', p.encode('ascii'), ct.c_float(float(val)))
 
         self.cache[param] = [True, val]
 
@@ -150,26 +139,15 @@ class VMRemote(abc.ABC):
         except KeyError:
             raise VMRError(f'Unknown profile: {self.kind.id}/{name}')
 
+    @m_polling
     def button_getstatus(self, logical_id: int, mode: int) -> int:
-        param = f'mb_{logical_id}_{mode}'
-        if param in self.cache and self.cache[param][0]:
-            self.cache[param][0] = False
-            for i in range(self.max_polls):
-                if self.mdirty:
-                    return self.cache[param][1]
-                time.sleep(self.delay)
-        elif param in self.cache and self.mdirty:
-                return self.cache[param][1]
-
         c_logical_id = ct.c_long(logical_id)
         c_state = ct.c_float()
         c_mode = ct.c_long(mode)
 
         self._call('MacroButton_GetStatus', c_logical_id, ct.byref(c_state), c_mode)
 
-        self.cache[param] = [False, c_state.value]
-
-        return self.cache[param][1]
+        return c_state.value
 
     def button_setstatus(self, logical_id: int, state: int, mode: int):
         c_logical_id = ct.c_long(logical_id)
