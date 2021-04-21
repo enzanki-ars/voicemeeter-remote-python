@@ -158,8 +158,7 @@ class VMRemote(abc.ABC):
                 if self.mdirty:
                     return self.cache[param][1]
                 time.sleep(self.delay)
-        elif param in self.cache:
-            if self.pdirty:
+        elif param in self.cache and self.mdirty:
                 return self.cache[param][1]
 
         c_logical_id = ct.c_long(logical_id)
