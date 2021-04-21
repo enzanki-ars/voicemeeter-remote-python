@@ -134,7 +134,6 @@ The wrapper passes 1000 unit test runs cleanly with default values but if you wi
 If changing either argument be aware that max delay on getters is defined as the product of delay and max_polls.
 
 Setters and polling functions run without any delay.
-```
 
 ### `VMRemote` (higher level)
 #### `vmr.type`
