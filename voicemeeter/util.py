@@ -50,7 +50,7 @@ def m_polling(func):
                 if self.mdirty:
                     return self.cache[param][1]
                 time.sleep(self.delay)
-        elif param in self.cache and self.pdirty:
+        elif param in self.cache and self.mdirty:
             return self.cache[param][1]
 
         res = func(self, *args)
