@@ -53,6 +53,7 @@ will automatically perform teardown (logout) once your code leaves
 the scope of the with statement. In order to access wrapper methods
 in other functions pass the object returned by the with statement to
 your function, for example:
+
 ```python
 import voicemeeter
 
@@ -122,20 +123,17 @@ A *kind* specifies a major Voicemeeter version. Currently this encompasses
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
 
-#### `voicemeeter.remote(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=4) -> 'instanceof(VMRemote)'`
-Factory function for remotes. 
-- delay applies to parameter getters 
-- mdelay applies to macrobutton getter
-- max_polls defines the number of times pdirty and mdirty parameters are polled
+#### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=5) -> 'instanceof(VMRemote)'`
+Factory function for remotes.
+- delay: interval between polls
+- max_polls: maximum number of times a dirty parameter is polled.
 
-Occasionally it requires more than a single poll to determine whether parameters have been updated. The wrapper passes 1000 unit test runs
-cleanly with default values but if you wish to alter these settings you may do so with argument variables to voicemeeter.remote.
+max_polls define the number of times dirty parameters are polled separated by a given delay interval. Since the time taken for the Voicemeeter background service to update the polling parameters varies this allows for a quicker response time up to a max delay.
 
-Returns a `VMRemote` based on the `kind_id`.  
-Use it with a context manager
-```python
-with voicemeeter.remote('potato') as vmr:
-    vmr.inputs[0].mute = True
+The wrapper passes 1000 unit test runs cleanly with default values but if you wish to alter these settings you may do so with argument variables to voicemeeter.remote.
+If changing either argument be aware that max delay on getters is defined as the product of delay and max_polls.
+
+Setters and polling functions run without any delay.
 ```
 
 ### `VMRemote` (higher level)
@@ -228,8 +226,8 @@ Example:
   recorder.output(A1, 1)
   recorder.output(B2, 0)
 
-  # Filepath must be a raw string (or escaped backslashes)
-  recorder.load(Filepath)
+  # filepath must be a raw string (or escaped backslashes)
+  recorder.load(filepath)
 ```
 
 ### `VMRemote` (lower level)

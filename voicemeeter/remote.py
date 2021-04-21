@@ -15,9 +15,8 @@ from typing import Union
 
 class VMRemote(abc.ABC):
     """ Wrapper around Voicemeeter Remote's C API. """
-    def __init__(self, delay: float, mdelay: float, max_polls: int):
+    def __init__(self, delay: float, max_polls: int):
         self.delay = delay
-        self.mdelay = mdelay
         self.max_polls = max_polls
         self.cache = {}
 
@@ -33,6 +32,8 @@ class VMRemote(abc.ABC):
         retval = getattr(dll, fn_name)(*args)
         if check and retval not in expected:
             raise VMRDriverError(fn_name, retval)
+        if '_Get' in fn_name:
+            time.sleep(self.delay)
 
         return retval
 
@@ -83,12 +84,14 @@ class VMRemote(abc.ABC):
     def get(self, param: str, string=False) -> Union[str, float]:
         """ Retrieves a parameter from cache if pdirty else run getter """
         param = param.encode('ascii')
-        for i in range(self.max_polls):
-            time.sleep(self.delay)
-
-            if self.pdirty:
-                if param in self.cache:
-                    return self.cache[param]
+        if param in self.cache and self.cache[param][0]:
+            self.cache[param][0] = False
+            for i in range(self.max_polls):
+                if self.pdirty:
+                    return self.cache[param][1]
+                time.sleep(self.delay)
+        elif param in self.cache and self.pdirty:
+            return self.cache[param][1]
 
         if string:
             buf = (ct.c_wchar * 512)()
@@ -96,7 +99,10 @@ class VMRemote(abc.ABC):
         else:
             buf = ct.c_float()
             self._call('GetParameterFloat', param, ct.byref(buf))
-        return buf.value
+
+        self.cache[param] = [False, buf.value]
+
+        return self.cache[param][1]
 
     def set(self, param: str, val: Union[str, float]):
         """ Updates a parameter. Attempts to cache value """
@@ -107,7 +113,8 @@ class VMRemote(abc.ABC):
             self._call('SetParameterStringW', param, ct.c_wchar_p(val))
         else:
             self._call('SetParameterFloat', param, ct.c_float(float(val)))
-        self.cache[param] = val
+
+        self.cache[param] = [True, val]
 
     def show(self):
         """ Shows Voicemeeter if it's hidden. """
@@ -143,6 +150,28 @@ class VMRemote(abc.ABC):
         except KeyError:
             raise VMRError(f'Unknown profile: {self.kind.id}/{name}')
 
+    def button_getstatus(self, logical_id: int, mode: int) -> int:
+        param = f'mb_{logical_id}_{mode}'
+        if param in self.cache and self.cache[param][0]:
+            self.cache[param][0] = False
+            for i in range(self.max_polls):
+                if self.mdirty:
+                    return self.cache[param][1]
+                time.sleep(self.delay)
+        elif param in self.cache:
+            if self.pdirty:
+                return self.cache[param][1]
+
+        c_logical_id = ct.c_long(logical_id)
+        c_state = ct.c_float()
+        c_mode = ct.c_long(mode)
+
+        self._call('MacroButton_GetStatus', c_logical_id, ct.byref(c_state), c_mode)
+
+        self.cache[param] = [False, c_state.value]
+
+        return self.cache[param][1]
+
     def button_setstatus(self, logical_id: int, state: int, mode: int):
         c_logical_id = ct.c_long(logical_id)
         c_state = ct.c_float(float(state))
@@ -150,23 +179,7 @@ class VMRemote(abc.ABC):
 
         self._call('MacroButton_SetStatus', c_logical_id, c_state, c_mode)
         param = f'mb_{logical_id}_{mode}'
-        self.cache[param] = int(state)
-
-    def button_getstatus(self, logical_id: int, mode: int) -> int:
-        param = f'mb_{logical_id}_{mode}'
-        for i in range(self.max_polls):
-            time.sleep(self.mdelay)
-
-            if self.mdirty:
-                if param in self.cache:
-                    return self.cache[param]
-
-        c_logical_id = ct.c_long(logical_id)
-        c_state = ct.c_float()
-        c_mode = ct.c_long(mode)
-      
-        self._call('MacroButton_GetStatus', c_logical_id, ct.byref(c_state), c_mode)
-        return int(c_state.value)
+        self.cache[param] = [True, int(c_state.value)]
       
     def button_state(self, logical_id: int, state: int):
         self.button_setstatus(logical_id, state, mode=1)
@@ -225,10 +238,10 @@ def _make_remote(kind) -> 'instanceof(VMRemote)':
 
 _remotes = {kind.id: _make_remote(kind) for kind in kinds.all}
 
-def connect(kind_id, delay: float=.001, mdelay: float=.005, max_polls: int=4):
+def connect(kind_id, delay: float=.001, max_polls: int=5):
     """ Connect to Voicemeeter and sets its strip layout. """
     try:
         cls = _remotes[kind_id]
-        return cls(delay=delay, mdelay=mdelay, max_polls=max_polls)
+        return cls(delay=delay, max_polls=max_polls)
     except KeyError as err:
         raise VMRError(f'Invalid Voicemeeter kind: {kind_id}')
