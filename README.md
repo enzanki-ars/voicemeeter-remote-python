@@ -19,8 +19,10 @@ git clone https://github.com/Freemanium/voicemeeter-remote-python
 cd voicemeeter-remote-python
 pip install .
 ```
+Use this wrapper with a context manager, for example:
 
 ## Usage
+### Example 1
 ```python
 import voicemeeter
 
@@ -48,12 +50,11 @@ with voicemeeter.remote(kind) as vmr:
     vmr.reset()
 ```
 
-This wrapper runs within the context management protocol meaning it
-will automatically perform teardown (logout) once your code leaves
-the scope of the with statement. In order to access wrapper methods
-in other functions pass the object returned by the with statement to
-your function, for example:
+Once your code leaves the scope of the with statement logout will be called
+automatically. In order to separate logic into other functions pass the object
+returned by with to your function, for example:
 
+### Example 2
 ```python
 import voicemeeter
 
@@ -67,14 +68,10 @@ def do_things(vmr):
     # Set the mapping of the second input strip
     vmr.inputs[1].A3 = True
     print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A3}')
-    vmr.inputs[1].A3 = False
-    print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A3}')
 
 def do_other_things(vmr):
     # Set the gain slider of the leftmost output bus
     vmr.outputs[0].gain = -6.0
-    print(vmr.outputs[0].gain)
-    vmr.outputs[0].gain = 3.0
     print(vmr.outputs[0].gain)
 
 with voicemeeter.remote(kind) as vmr:
@@ -244,6 +241,21 @@ Calls the C API's parameter setters, `SetParameterFloat` or `SetParameterStringW
 ### Errors
 - `errors.VMRError`: Base Voicemeeter Remote error class.
 - `errors.VMRDriverError`: Raised when a C API function returns an unexpected value.
+
+### Tests
+Included are some unit tests which can be run with nosetools so `pip install nose`
+
+test/other/runmany.ps1 uses the plugin -randomize so `pip install randomize`
+
+You can isolate tests by commenting/uncommenting the `@nottest` decorator before each test class.
+
+To run the tests from test directory:
+
+`nosetests test` or `.\runmany.ps1 <num>` where num is the number of tests you wish to run.
+
+If using runmany to run tests output will be logged and a summary log will be written.
+
+For testing timing tolerances for delay and max_polls edit the values in test/__init__.py
 
 ## Resources
 - [Voicemeeter Remote C API](https://forum.vb-audio.com/viewtopic.php?f=8&t=346)
