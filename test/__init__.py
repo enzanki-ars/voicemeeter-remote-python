@@ -1,10 +1,9 @@
 import voicemeeter
 
 DELAY = 0.001
-MDELAY = 0.005
-MAX_POLLS = 4
+MAX_POLLS = 5
 
-tests = voicemeeter.remote('banana', delay=DELAY, mdelay=MDELAY, max_polls=MAX_POLLS)
+tests = voicemeeter.remote('banana', delay=DELAY, max_polls=MAX_POLLS)
 
 def setup_package():
     tests._login()
