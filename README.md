@@ -255,7 +255,7 @@ To run the tests from test directory:
 
 If using runmany to run tests output will be logged and a summary log will be written.
 
-For testing timing tolerances for delay and max_polls edit the values in test/__init__.py
+For testing timing tolerances for delay and max_polls edit the values in test/\_\_init\_\_.py
 
 ## Resources
 - [Voicemeeter Remote C API](https://forum.vb-audio.com/viewtopic.php?f=8&t=346)
