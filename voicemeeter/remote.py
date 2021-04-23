@@ -196,7 +196,7 @@ def _make_remote(kind) -> 'instanceof(VMRemote)':
         tuple(OutputBus.make((i < self.num_B), self, i) 
         for i in range(self.num_A + self.num_B))
         self.recorder = Recorder(self)
-        self.button = [MacroButtons(self, i) for i in range(70)]
+        self.button = tuple(MacroButtons(self, i) for i in range(70))
     def get_profiles(self):
         return profiles.profiles[kind.id]
  
