@@ -17,7 +17,16 @@ Tested against
 ```
 git clone https://github.com/Freemanium/voicemeeter-remote-python
 cd voicemeeter-remote-python
+```
+
+Just the wrapper:
+```
 pip install .
+```
+
+With development dependencies:
+```
+pip install -e .['development']
 ```
 
 ## Usage
@@ -244,15 +253,13 @@ Calls the C API's parameter setters, `SetParameterFloat` or `SetParameterStringW
 - `errors.VMRDriverError`: Raised when a C API function returns an unexpected value.
 
 ### Tests
-Included are some unit tests which can be run with nosetools so `pip install nose`
+First make sure you installed the [development dependencies]https://github.com/onyx-and-iris/voicemeeter-remote-python#installation
 
-test/other/runmany.ps1 uses the plugin -randomize so `pip install randomize`
-
-You can isolate tests by commenting/uncommenting the `@nottest` decorator before each test class.
+Isolate tests using the `@nottest` decorator before each test class.
 
 To run the tests from test directory:
 
-`nosetests test` or `.\runmany.ps1 <num>` where num is the number of tests you wish to run.
+`nosetests --r test` or `.\runmany.ps1 <num>` where num is the number of tests you wish to run.
 
 If using runmany to run tests output will be logged and a summary log will be written.
 

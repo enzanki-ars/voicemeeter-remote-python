@@ -7,5 +7,11 @@ setup(
   packages=['voicemeeter'],
   install_requires=[
     'toml'
-  ]
+  ],
+  extras_require={
+    'development': [
+      'nose',
+      'randomize'
+    ]
+  }
 )
