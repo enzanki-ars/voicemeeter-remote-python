@@ -19,9 +19,10 @@ git clone https://github.com/Freemanium/voicemeeter-remote-python
 cd voicemeeter-remote-python
 pip install .
 ```
-Use this wrapper with a context manager, for example:
 
 ## Usage
+Use this wrapper with a context manager, for example:
+
 ### Example 1
 ```python
 import voicemeeter
@@ -184,23 +185,23 @@ Any property is gettable and settable.
 
 ### `Macrobuttons`
 Can be configured using three different modes: state, stateonly and trigger
-#### `vmr.button_state(id, state)`
+#### `vmr.button[id].state`
 Set the state and execute the script for macrobutton by id
-#### `vmr.button_stateonly(id, state)`
+#### `vmr.button[id].stateonly`
 Set the current state but don't execute the script for the macrobutton by id
-#### `vmr.button_trigger(id, state)`
+#### `vmr.button[id].trigger`
 Set trigger status for macrobutton by id
 - `id`: int, from 0 to 69
 - `state`: boolean
 
 Example:
 ```python
-  # set macrobutton id 34 state to 1
-  vmr.button_state(34, 1)
-  # set macrobutton id 10 stateonly to 0  
-  vmr.button_stateonly(10, 0)
-  # set macrobutton id 17 trigger to 1  
-  vmr.button_trigger(17, 1)
+  # set macrobutton id=34, mode=state to True
+  vmr.button[34].state = True
+  # set macrobutton id=10, mode=stateonly to False
+  vmr.button[10].stateonly = False
+  # set macrobutton id=17, mode=trigger to True
+  vmr.button[17].trigger = True
 ```
 
 ### `Recorder`

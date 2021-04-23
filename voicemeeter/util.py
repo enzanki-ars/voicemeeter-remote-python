@@ -22,13 +22,11 @@ def polling(func):
     """ check if recently cached was an updated value """
     @wraps(func)
     def wrapper(*args, **kwargs):
-        get = False
-        mb_get = False
-        if func.__name__ == 'get':
-            get = True
+        get = (func.__name__ == 'get')
+        mb_get = (func.__name__ == 'button_getstatus')
+        if get:
             _remote, param, *remaining = args
-        elif func.__name__ == 'button_getstatus':
-            mb_get = True
+        elif mb_get:
             _remote, logical_id, mode = args
             param = f'mb_{logical_id}_{mode}'
 
@@ -43,9 +41,7 @@ def polling(func):
         or param in _remote.cache and mb_get and _remote.mdirty:
             return _remote.cache[param][1]
 
-
         res = func(*args, **kwargs)
-
         _remote.cache[param] = [False, res]
 
         return _remote.cache[param][1]

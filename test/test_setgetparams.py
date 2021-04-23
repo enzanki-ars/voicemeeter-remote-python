@@ -28,6 +28,19 @@ class TestSetAndGetParamsFloat:
         tests.set('Strip[2].Mute', 0)
         assert_equal(tests.get('Strip[2].Mute'), 0.0)
 
+
+@nottest
+class TestSetAndGetParamsFloatLoop:
+    def test_it_gets_strip0_mute_on(self):
+        tests.set('Strip[0].Mute', 1)
+        for i in range(10):
+            assert_equal(tests.get('Strip[0].Mute'), 1.0)
+
+    def test_it_gets_strip0_mute_off(self):
+        tests.set('Strip[0].Mute', 0)       
+        for i in range(10):
+            assert_equal(tests.get('Strip[0].Mute'), 0.0)
+
 #@nottest
 class TestSetAndGetParamsFloatWithAlias:
     def test_it_sets_and_gets_input0_A1_on(self):
@@ -66,7 +79,7 @@ class TestSetAndGetParamsFloatWithAlias:
         tests.inputs[2].A3 = True
         assert_equal(tests.inputs[2].A3, True)
 
-    def test_it_sets_and_gets_output1_B1_on(self):
+    def test_it_sets_and_gets_output1_gain_on(self):
         tests.outputs[0].gain = 1.0
         assert_equal(tests.outputs[0].gain, 1.0)
 

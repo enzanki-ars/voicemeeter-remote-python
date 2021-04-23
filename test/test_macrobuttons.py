@@ -82,25 +82,25 @@ class TestMacroButtons:
 class TestMacroButtonsWithAlias:
     """ Test alias functions """
     def test_it_sets_macrobutton0_state_on_with_alias(self):
-        tests.button_state(0, 1)
-        assert_equal(tests.button_getstatus(0, 1), 1)  
+        tests.button[0].state = True
+        assert_equal(tests.button[0].state, True)  
 
     def test_it_sets_macrobutton0_stateonly_on_with_alias(self):
-        tests.button_stateonly(0, 1)
-        assert_equal(tests.button_getstatus(0, 2), 1)
+        tests.button[0].stateonly
+        assert_equal(tests.button[0].stateonly, True)
 
     def test_it_sets_macrobutton0_trigger_on_with_alias(self):
-        tests.button_trigger(0, 1)
-        assert_equal(tests.button_getstatus(0, 3), 1)
+        tests.button[0].trigger = True
+        assert_equal(tests.button[0].trigger, True)
 
     def test_it_sets_macrobutton0_state_off_with_alias(self):
-        tests.button_state(0, 0)
-        assert_equal(tests.button_getstatus(0, 1), 0) 
+        tests.button[0].state = False
+        assert_equal(tests.button[0].state, False) 
 
     def test_it_sets_macrobutton0_stateonly_off_with_alias(self):
-        tests.button_stateonly(0, 0)
-        assert_equal(tests.button_getstatus(0, 2), 0)    
+        tests.button[0].stateonly = False
+        assert_equal(tests.button[0].stateonly, False)   
 
     def test_it_sets_macrobutton0_trigger_off_with_alias(self):
-        tests.button_trigger(0, 0)
-        assert_equal(tests.button_getstatus(0, 3), 0)
+        tests.button[0].trigger = False
+        assert_equal(tests.button[0].trigger, False)
