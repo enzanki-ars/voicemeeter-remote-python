@@ -253,7 +253,7 @@ Calls the C API's parameter setters, `SetParameterFloat` or `SetParameterStringW
 - `errors.VMRDriverError`: Raised when a C API function returns an unexpected value.
 
 ### Tests
-First make sure you installed the [development dependencies]https://github.com/onyx-and-iris/voicemeeter-remote-python#installation
+First make sure you installed the [development dependencies](https://github.com/onyx-and-iris/voicemeeter-remote-python#installation)
 
 Isolate tests using the `@nottest` decorator before each test class.
 
