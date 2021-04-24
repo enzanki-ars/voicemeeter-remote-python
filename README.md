@@ -61,32 +61,39 @@ with voicemeeter.remote(kind) as vmr:
 ```
 
 Once your code leaves the scope of the with statement logout will be called
-automatically. In order to separate logic into other functions pass the object
-returned by with to your function, for example:
+automatically. In order to separate logic into other classes and functions pass
+the object returned by with, for example:
 
 ### Example 2
 ```python
 import voicemeeter
 
-# Can be 'basic', 'banana' or 'potato'
-kind = 'potato'
+class Things:
+    def __init__(self, vmr):
+        self.vmr = vmr
 
-# Ensure that Voicemeeter is launched
-voicemeeter.launch(kind)
+    def things(self):
+        # Set the mapping of the second input strip
+        self.vmr.inputs[1].A3 = True
+        print(f'Output A4 of Strip {self.vmr.inputs[1].label}: {self.vmr.inputs[1].A3}')
 
-def do_things(vmr):
-    # Set the mapping of the second input strip
-    vmr.inputs[1].A3 = True
-    print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A3}')
+    def other_things(self):
+        # Set the gain slider of the leftmost output bus
+        self.vmr.outputs[0].gain = -6.0
+        print(self.vmr.outputs[0].gain)
 
-def do_other_things(vmr):
-    # Set the gain slider of the leftmost output bus
-    vmr.outputs[0].gain = -6.0
-    print(vmr.outputs[0].gain)
+def main():
+    with voicemeeter.remote(kind) as vmr:
+        do = Things(vmr)
+        do.things()
+        do.other_things()
 
-with voicemeeter.remote(kind) as vmr:
-    do_things(vmr)
-    do_other_things(vmr)
+
+if __name__ == '__main__':
+    # Ensure that Voicemeeter is launched
+    voicemeeter.launch('potato')
+
+    main()
 ```
 
 ## Profiles
