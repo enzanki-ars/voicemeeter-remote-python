@@ -61,8 +61,8 @@ with voicemeeter.remote(kind) as vmr:
 ```
 
 Once your code leaves the scope of the with statement logout will be called
-automatically. In order to separate logic into other classes and functions pass
-the object returned by with, for example:
+automatically. Pass the vmr object to other classes and functions if you need to,
+for example:
 
 ### Example 2
 ```python
@@ -236,8 +236,8 @@ Example:
   vmr.recorder.loop()
 
   # Set recorder output channels
-  recorder.output(A1, 1)
-  recorder.output(B2, 0)
+  vmr.recorder.A1 = True
+  vmr.recorder.B2 = False
 
   # filepath must be a raw string (or escaped backslashes)
   recorder.load(filepath)
