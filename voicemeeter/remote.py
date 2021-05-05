@@ -198,9 +198,9 @@ def _make_remote(kind) -> 'instanceof(VMRemote)':
         for i in range(self.num_A + self.num_B))
         self.recorder = Recorder(self)
         self.button = tuple(MacroButtons(self, i) for i in range(70))
-        self.vban_in, self.vban_out = kind.vban
-        self.vban_in = tuple(Vban(self, i, "in") for i in range(self.vban_in))
-        self.vban_out = tuple(Vban(self, i, "out") for i in range(self.vban_out))
+        self.num_vban_in, self.num_vban_out = kind.vban
+        self.vban_in = tuple(Vban(self, i, "in") for i in range(self.num_vban_in))
+        self.vban_out = tuple(Vban(self, i, "out") for i in range(self.num_vban_out))
     def get_profiles(self):
         return profiles.profiles[kind.id]
  
