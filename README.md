@@ -30,8 +30,7 @@ pip install -e .['development']
 ```
 
 ## Usage
-Use this wrapper with a context manager, for example:
-
+Use this wrapper with a context manager.
 Be aware that once your code leaves the scope of the with statement logout will be called
 automatically. Pass the vmr object to other classes and functions if you need to,
 for example:
