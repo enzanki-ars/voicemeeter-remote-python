@@ -86,7 +86,7 @@ class TestMacroButtonsWithAlias:
         assert_equal(tests.button[0].state, True)  
 
     def test_it_sets_macrobutton0_stateonly_on_with_alias(self):
-        tests.button[0].stateonly
+        tests.button[0].stateonly = True
         assert_equal(tests.button[0].stateonly, True)
 
     def test_it_sets_macrobutton0_trigger_on_with_alias(self):
@@ -104,3 +104,53 @@ class TestMacroButtonsWithAlias:
     def test_it_sets_macrobutton0_trigger_off_with_alias(self):
         tests.button[0].trigger = False
         assert_equal(tests.button[0].trigger, False)
+
+
+    def test_it_sets_macrobutton1_state_on_with_alias(self):
+        tests.button[1].state = True
+        assert_equal(tests.button[1].state, True)  
+
+    def test_it_sets_macrobutton1_stateonly_on_with_alias(self):
+        tests.button[1].stateonly = True
+        assert_equal(tests.button[1].stateonly, True)
+
+    def test_it_sets_macrobutton1_trigger_on_with_alias(self):
+        tests.button[1].trigger = True
+        assert_equal(tests.button[1].trigger, True)
+
+    def test_it_sets_macrobutton1_state_off_with_alias(self):
+        tests.button[1].state = False
+        assert_equal(tests.button[1].state, False) 
+
+    def test_it_sets_macrobutton1_stateonly_off_with_alias(self):
+        tests.button[1].stateonly = False
+        assert_equal(tests.button[1].stateonly, False)   
+
+    def test_it_sets_macrobutton1_trigger_off_with_alias(self):
+        tests.button[1].trigger = False
+        assert_equal(tests.button[1].trigger, False)
+
+
+    def test_it_sets_macrobutton2_state_on_with_alias(self):
+        tests.button[2].state = True
+        assert_equal(tests.button[2].state, True)  
+
+    def test_it_sets_macrobutton2_stateonly_on_with_alias(self):
+        tests.button[2].stateonly = True
+        assert_equal(tests.button[2].stateonly, True)
+
+    def test_it_sets_macrobutton2_trigger_on_with_alias(self):
+        tests.button[2].trigger = True
+        assert_equal(tests.button[2].trigger, True)
+
+    def test_it_sets_macrobutton2_state_off_with_alias(self):
+        tests.button[2].state = False
+        assert_equal(tests.button[2].state, False) 
+
+    def test_it_sets_macrobutton2_stateonly_off_with_alias(self):
+        tests.button[2].stateonly = False
+        assert_equal(tests.button[2].stateonly, False)   
+
+    def test_it_sets_macrobutton2_trigger_off_with_alias(self):
+        tests.button[2].trigger = False
+        assert_equal(tests.button[2].trigger, False)
