@@ -7,7 +7,7 @@ from .errors import VMRError, VMRDriverError
 from .input import InputStrip
 from .output import OutputBus
 from .recorder import Recorder
-from .macrobuttons import MacroButtons
+from .macrobutton import MacroButtons
 from .vban import Vban
 from . import kinds
 from . import profiles
