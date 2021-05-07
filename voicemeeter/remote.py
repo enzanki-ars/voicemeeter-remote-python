@@ -111,13 +111,15 @@ class VMRemote(abc.ABC):
 
         param_string = str()
         for key, val in params.items():
-            if key.split("-")[0] == 'in':
-                identifier = f'Strip[{key.split("-")[1]}]'
-            elif key.split("-")[0] == 'out':
-                identifier = f'Bus[{key.split("-")[1]}]'
+            m = []
+            m = key.split("-")
+            if m[0] == 'in':
+                identifier = f'Strip[{m[1]}]'
+            elif m[0] == 'out':
+                identifier = f'Bus[{m[1]}]'
                 val['EQ.on'] = val.pop('eq', None)
-            elif key.split("-")[0] == 'vban':
-                identifier = f'vban.{key.split("-")[1]}stream[{key.split("-")[2]}]'
+            elif m[0] == 'vban':
+                identifier = f'{m[0]}.{m[1]}stream[{m[2]}]'
 
             for k, v in val.items():
                 if v is not None:
