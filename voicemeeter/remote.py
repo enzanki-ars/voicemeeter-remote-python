@@ -106,6 +106,26 @@ class VMRemote(abc.ABC):
 
         self.cache[param] = [True, val]
 
+    def setmulti(self, params: dict):
+        """ alternative set many through dict """
+        if not isinstance(params, dict):
+                raise VMRError('Error, expected a dictionary')
+
+        param_string = str()
+        for key, val in params.items():
+            if key.split("-")[0] == 'in':
+                identifier = f'Strip[{key.split("-")[1]}]'
+            elif key.split("-")[0] == 'out':
+                identifier = f'Bus[{key.split("-")[1]}]'
+            elif key.split("-")[0] == 'vban':
+                identifier = f'vban.{key.split("-")[1]}stream[{key.split("-")[2]}]'
+
+            for each in val:
+                param_string += f'{identifier}.{each}={int(val[each])};'
+            self._call('SetParameters', param_string.encode('ascii'))
+            param_string = str()
+
+
     def show(self):
         """ Shows Voicemeeter if it's hidden. """
         self.set('Command.Show', 1)
@@ -158,7 +178,7 @@ class VMRemote(abc.ABC):
         self._call('MacroButton_SetStatus', c_logical_id, c_state, c_mode)
         param = f'mb_{logical_id}_{mode}'
         self.cache[param] = [True, int(c_state.value)]
-      
+  
     def show_vbanchat(self, state: int):
         if state not in (0, 1):
             raise VMRError('State must be 0 or 1')

@@ -8,7 +8,7 @@ class IVban(abc.ABC):
         pass
 
     @abc.abstractmethod
-    def enable(self):
+    def on(self):
         pass
 
 class Vban(IVban):
@@ -29,11 +29,11 @@ class Vban(IVban):
         return f'vban.{self.direction}stream[{self.index}]'
 
     @property
-    def enable(self):
+    def on(self):
         return (self.getter(f'{self.identifier}.on') == 1)
 
-    @enable.setter
-    def enable(self, val):
+    @on.setter
+    def on(self, val):
         if isinstance(val, bool):
             self.setter(f'{self.identifier}.on', 1 if val else 0)
         else:
