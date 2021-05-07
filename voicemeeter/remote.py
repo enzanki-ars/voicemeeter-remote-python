@@ -73,14 +73,12 @@ class VMRemote(abc.ABC):
 
     @property
     def pdirty(self) -> bool:
-        """ True if UI parameters have been updated. """
-        val = self._call('IsParametersDirty', expected=(0,1))
-        return (val == 1)
+        """ True iff UI parameters have been updated. """
+        return (self._call('IsParametersDirty', expected=(0,1)) == 1)
     @property
     def mdirty(self) -> bool:
-        """ True if MB parameters have been updated. """
-        val = self._call('MacroButton_IsDirty', expected=(0,1))
-        return (val == 1)
+        """ True iff MB parameters have been updated. """
+        return (self._call('MacroButton_IsDirty', expected=(0,1)) == 1)
  
     @polling
     def get(self, param: str, string=False) -> Union[str, float]:

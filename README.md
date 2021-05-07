@@ -218,9 +218,9 @@ Example:
 
 ### `VMRemote` (lower level)
 #### `vmr.pdirty`
-`True` if UI parameters have been updated. Use this if to poll for UI updates.
+`True` iff UI parameters have been updated. Use this to poll for UI updates.
 #### `vmr.mdirty`
-`True` if macrobutton parameters have been updated. Use this if to poll for MB updates.
+`True` iff macrobutton parameters have been updated. Use this to poll for MB updates.
 
 #### `vmr.get(param_name, string=False)`
 Calls the C API's parameter getters, `GetParameterFloat` or `GetParameterStringW` respectively. Tries to cache the value on the first call and updates the cached value if `vmr.dirty` is `True`.
