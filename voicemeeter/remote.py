@@ -111,7 +111,6 @@ class VMRemote(abc.ABC):
 
         param_string = str()
         for key, val in params.items():
-            m = []
             m = key.split("-")
             if m[0] == 'in':
                 identifier = f'Strip[{m[1]}]'
