@@ -122,7 +122,8 @@ class VMRemote(abc.ABC):
 
             for k, v in val.items():
                 if v is not None:
-                    param_string += f'{identifier}.{k}={int(v)};'
+                    param_string += f'{identifier}.{k}={float(v)};'
+                    self.cache[f'{identifier}.{k}'] = [True, float(v)]
             self._call('SetParameters', param_string.encode('ascii'))
             param_string = str()
 
