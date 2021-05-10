@@ -15,7 +15,7 @@ Tested against
 
 ## Installation
 ```
-git clone https://github.com/Freemanium/voicemeeter-remote-python
+git clone https://github.com/onyx-and-iris/voicemeeter-remote-python
 cd voicemeeter-remote-python
 ```
 
