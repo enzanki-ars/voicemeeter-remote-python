@@ -85,9 +85,9 @@ class Vban(IVban):
         opts = \
         (11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000)
         if isinstance(val, int) and val in opts:
-            self.setter(f'{self.identifier}.channel', val)
+            self.setter(f'{self.identifier}.sr', val)
         else:
-            raise VMRError('Error invalid value')
+            raise VMRError('Error expected one of: {opts}')
 
     @property
     def channel(self):
@@ -104,16 +104,16 @@ class Vban(IVban):
 
     @property
     def bit(self):
-        return int(self.getter(f'{self.identifier}.bit'))
+        return 16 if (int(self.getter(f'{self.identifier}.bit') == 1)) else 24
 
     @bit.setter
     def bit(self, val):
         if self.direction == 'in':
             raise VMRError('Error, read only value')
-        if isinstance(val, int) and val in (0, 1):
-            self.setter(f'{self.identifier}.bit', val)
+        if isinstance(val, int) and val in (16, 24):
+            self.setter(f'{self.identifier}.bit', 1 if (val == 16) else 2)
         else:
-            raise VMRError('Error expected value in range(0, 1)')
+            raise VMRError('Error expected value 16 or 24')
 
     @property
     def quality(self):

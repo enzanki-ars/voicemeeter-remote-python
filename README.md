@@ -39,7 +39,7 @@ for example:
 ```python
 import voicemeeter
 
-class Things:
+class ManyThings:
     def __init__(self, vmr):
         self.vmr = vmr
 
@@ -55,7 +55,7 @@ class Things:
 
 def main():
     with voicemeeter.remote(kind) as vmr:
-        do = Things(vmr)
+        do = ManyThings(vmr)
         do.things()
         do.other_things()
 
