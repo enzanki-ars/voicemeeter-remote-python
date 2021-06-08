@@ -58,6 +58,14 @@ def main():
         do = ManyThings(vmr)
         do.things()
         do.other_things()
+
+if __name__ == '__main__':
+    kind = 'potato'
+
+    # Ensure that Voicemeeter is launched
+    voicemeeter.launch(kind)
+
+    main()
 ```
 
 Or perform setup/teardown independently, for example:
