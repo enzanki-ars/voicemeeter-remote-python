@@ -30,12 +30,12 @@ pip install -e .['development']
 ```
 
 ## Usage
-Use this wrapper with a context manager.
-Be aware that once your code leaves the scope of the with statement logout will be called
+You can use this wrapper in two ways.
+With a context manager, be aware that once your code leaves the scope of the with statement logout will be called
 automatically. Pass the vmr object to other classes and functions if you need to,
 for example:
 
-### Example
+### Example 1
 ```python
 import voicemeeter
 
@@ -58,15 +58,25 @@ def main():
         do = ManyThings(vmr)
         do.things()
         do.other_things()
+```
 
+Or perform setup/teardown independently, for example:
+### Example 2
+```python
+import voicemeeter
 
-if __name__ == '__main__':
-    kind = 'potato'
+kind = 'potato'
 
-    # Ensure that Voicemeeter is launched
-    voicemeeter.launch(kind)
+# Ensure that Voicemeeter is launched
+voicemeeter.launch(kind)
 
-    main()
+vmr = voicemeeter.remote(kind)
+vmr._login()
+
+#toggle mute
+vmr.strip[0].mute = not vmr.strip[0].mute
+
+vmr._logout()
 ```
 
 ## Profiles
