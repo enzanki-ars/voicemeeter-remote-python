@@ -30,7 +30,7 @@ pip install -e .['development']
 ```
 
 ## Usage
-You can use this wrapper in two ways.
+You may use this wrapper in two ways.
 With a context manager, be aware that once your code leaves the scope of the with statement logout will be called
 automatically. Pass the vmr object to other classes and functions if you need to,
 for example:
@@ -68,7 +68,8 @@ if __name__ == '__main__':
     main()
 ```
 
-Or perform setup/teardown independently, for example:
+Or perform setup/teardown independently, if using this way you MUST call `_login()`
+once at the start of your code and `_logout()` once at the end.
 ### Example 2
 ```python
 import voicemeeter
