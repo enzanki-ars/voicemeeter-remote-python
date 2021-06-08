@@ -74,7 +74,7 @@ vmr = voicemeeter.remote(kind)
 vmr._login()
 
 #toggle mute
-vmr.strip[0].mute = not vmr.strip[0].mute
+vmr.inputs[0].mute = not vmr.inputs[0].mute
 
 vmr._logout()
 ```
