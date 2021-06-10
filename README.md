@@ -68,8 +68,8 @@ if __name__ == '__main__':
     main()
 ```
 
-Or perform setup/teardown independently, if using this way you MUST call `_login()`
-once at the start of your code and `_logout()` once at the end.
+Or perform setup/teardown independently, if using this way you MUST call `login()`
+once at the start of your code and `logout()` once at the end.
 ### Example 2
 ```python
 import voicemeeter
@@ -80,12 +80,12 @@ kind = 'potato'
 voicemeeter.launch(kind)
 
 vmr = voicemeeter.remote(kind)
-vmr._login()
+vmr.login()
 
 #toggle mute
 vmr.inputs[0].mute = not vmr.inputs[0].mute
 
-vmr._logout()
+vmr.logout()
 ```
 
 ## Profiles

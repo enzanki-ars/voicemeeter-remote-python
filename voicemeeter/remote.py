@@ -38,11 +38,11 @@ class VMRemote(abc.ABC):
 
         return retval
 
-    def _login(self):
+    def login(self):
         self._call('Login')
         while self.mdirty or self.pdirty:
             pass
-    def _logout(self):
+    def logout(self):
         time.sleep(0.02)
         self._call('Logout')
 
@@ -194,11 +194,11 @@ class VMRemote(abc.ABC):
         self.apply_profile('base')
 
     def __enter__(self):
-        self._login()
+        self.login()
         return self
 
     def __exit__(self, type, value, traceback):
-        self._logout()
+        self.logout()
 
 
 def _make_remote(kind) -> 'instanceof(VMRemote)':
