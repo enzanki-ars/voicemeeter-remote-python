@@ -82,7 +82,7 @@ voicemeeter.launch(kind)
 vmr = voicemeeter.remote(kind)
 vmr.login()
 
-#toggle mute
+# toggle mute
 vmr.inputs[0].mute = not vmr.inputs[0].mute
 
 vmr.logout()
@@ -232,7 +232,7 @@ Example:
   vmr.recorder.B2 = False
 
   # filepath must be a raw string (or escaped backslashes)
-  recorder.load(filepath)
+  vmr.recorder.load(filepath)
 ```
 
 ### `VBAN`
