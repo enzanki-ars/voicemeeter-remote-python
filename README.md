@@ -149,7 +149,7 @@ The kind of the Voicemeeter instance.
 A tuple of the form `(v1, v2, v3, v4)`.
 
 #### `vmr.strip`
-An `striptrip` tuple, containing both physical and virtual.
+An `InputStrip` tuple, containing both physical and virtual.
 #### `vmr.bus`
 An `OutputBus` tuple, containing both physical and virtual.
 
@@ -174,7 +174,7 @@ Loads a profile.
 #### `vmr.reset()`
 Resets everything to the `base` profile.
 
-### `Inputstrip`
+### `InputStrip`
 Any property is gettable and settable.
 - `label`: string
 - `solo`: boolean
