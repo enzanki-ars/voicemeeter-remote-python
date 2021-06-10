@@ -45,13 +45,13 @@ class ManyThings:
 
     def things(self):
         # Set the mapping of the second input strip
-        self.vmr.inputs[1].A3 = True
-        print(f'Output A4 of Strip {self.vmr.inputs[1].label}: {self.vmr.inputs[1].A3}')
+        self.vmr.strip[1].A3 = True
+        print(f'Output A4 of Strip {self.vmr.strip[1].label}: {self.vmr.strip[1].A3}')
 
     def other_things(self):
         # Set the gain slider of the leftmost output bus
-        self.vmr.outputs[0].gain = -6.0
-        print(self.vmr.outputs[0].gain)
+        self.vmr.bus[0].gain = -6.0
+        print(self.vmr.bus[0].gain)
 
 def main():
     with voicemeeter.remote(kind) as vmr:
@@ -83,7 +83,7 @@ vmr = voicemeeter.remote(kind)
 vmr.login()
 
 # toggle mute
-vmr.inputs[0].mute = not vmr.inputs[0].mute
+vmr.strip[0].mute = not vmr.strip[0].mute
 
 vmr.logout()
 ```
@@ -97,8 +97,8 @@ touch profiles/potato/mySetup.toml
 ```
 
 A config can contain any key that `remote.apply()` would accept. Additionally, `extends` can be provided to inherit from another profile. Two profiles are available by default:
-- `blank`, all inputs off and all sliders to `0.0`
-- `base`, all physical inputs to `A1`, all virtual inputs to `B1`, all sliders to `0.0`
+- `blank`, all strip off and all sliders to `0.0`
+- `base`, all physical strip to `A1`, all virtual strip to `B1`, all sliders to `0.0`
 
 Sample `mySetup.toml`
 ```toml
@@ -148,9 +148,9 @@ The kind of the Voicemeeter instance.
 #### `vmr.version`
 A tuple of the form `(v1, v2, v3, v4)`.
 
-#### `vmr.inputs`
-An `InputStrip` tuple, containing both physical and virtual.
-#### `vmr.outputs`
+#### `vmr.strip`
+An `striptrip` tuple, containing both physical and virtual.
+#### `vmr.bus`
 An `OutputBus` tuple, containing both physical and virtual.
 
 #### `vmr.show()`
@@ -174,7 +174,7 @@ Loads a profile.
 #### `vmr.reset()`
 Resets everything to the `base` profile.
 
-### `InputStrip`
+### `Inputstrip`
 Any property is gettable and settable.
 - `label`: string
 - `solo`: boolean
