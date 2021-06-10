@@ -1,24 +1,29 @@
 import voicemeeter
 
-# Can be 'basic', 'banana' or 'potato'
-kind = 'potato'
+class ManyThings:
+    def __init__(self, vmr):
+        self.vmr = vmr
 
-# Ensure that Voicemeeter is launched
-voicemeeter.launch(kind)
+    def things(self):
+        # Set the mapping of the second input strip
+        self.vmr.strip[1].A3 = True
+        print(f'Output A4 of Strip {self.vmr.strip[1].label}: {self.vmr.strip[1].A3}')
 
-with voicemeeter.remote(kind) as vmr:
-  # Set the mapping of the second input strip
-  vmr.inputs[1].A4 = True
-  print(f'Output A4 of Strip {vmr.inputs[1].label}: {vmr.inputs[1].A4}')
+    def other_things(self):
+        # Set the gain slider of the leftmost output bus
+        self.vmr.bus[0].gain = -6.0
+        print(self.vmr.bus[0].gain)
 
-  # Set the gain slider of the leftmost output bus
-  vmr.outputs[0].gain = -6.0
+def main():
+    with voicemeeter.remote(kind) as vmr:
+        do = ManyThings(vmr)
+        do.things()
+        do.other_things()
 
-  # Also supports assignment through a dict
-  vmr.apply({
-    'in-5': dict(A1=True, B1=True, gain=-6.0),
-    'out-2': dict(mute=True)
-  })
+if __name__ == '__main__':
+    kind = 'potato'
 
-  # Resets all UI elements to a base profile
-  vmr.reset()
+    # Ensure that Voicemeeter is launched
+    voicemeeter.launch(kind)
+
+    main()
