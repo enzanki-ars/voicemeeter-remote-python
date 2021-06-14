@@ -146,9 +146,9 @@ class VMRemote(abc.ABC):
             strip, index = key.split('-')
             index = int(index)
             if strip in ('in', 'input'):
-                target = self.inputs[index]
+                target = self.strip[index]
             elif strip in ('out', 'output'):
-                target = self.outputs[index]
+                target = self.bus[index]
             else:
                 raise ValueError(strip)
             target.apply(submapping)
