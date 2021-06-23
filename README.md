@@ -46,7 +46,7 @@ class ManyThings:
     def things(self):
         # Set the mapping of the second input strip
         self.vmr.strip[1].A3 = True
-        print(f'Output A4 of Strip {self.vmr.strip[1].label}: {self.vmr.strip[1].A3}')
+        print(f'Output A3 of Strip {self.vmr.strip[1].label}: {self.vmr.strip[1].A3}')
 
     def other_things(self):
         # Set the gain slider of the leftmost output bus
@@ -82,8 +82,11 @@ voicemeeter.launch(kind)
 vmr = voicemeeter.remote(kind)
 vmr.login()
 
-# toggle mute
+# Toggle mute for leftmost input strip
 vmr.strip[0].mute = not vmr.strip[0].mute
+
+# Toggle eq for leftmost output bus
+vmr.bus[0].eq = not vmr.bus[0].eq
 
 vmr.logout()
 ```

@@ -7,7 +7,7 @@ class ManyThings:
     def things(self):
         # Set the mapping of the second input strip
         self.vmr.strip[1].A3 = True
-        print(f'Output A4 of Strip {self.vmr.strip[1].label}: {self.vmr.strip[1].A3}')
+        print(f'Output A3 of Strip {self.vmr.strip[1].label}: {self.vmr.strip[1].A3}')
 
     def other_things(self):
         # Set the gain slider of the leftmost output bus
