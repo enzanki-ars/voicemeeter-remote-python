@@ -125,9 +125,9 @@ gain = 0.0
 ## API
 ### Kinds
 A *kind* specifies a major Voicemeeter version. Currently this encompasses
-- `basic`: [Voicemeeter](https://www.vb-audio.com/Voicemeeter/index.htm)
-- `banana`: [Voicemeeter Banana](https://www.vb-audio.com/Voicemeeter/banana.htm)
-- `potato`: [Voicemeeter Potato](https://www.vb-audio.com/Voicemeeter/potato.htm)
+- `basic`
+- `banana`
+- `potato`
 
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
@@ -185,6 +185,7 @@ Any property is gettable and settable.
 - `gain`: float, from -60.0 to 12.0
 - `comp`: float, from 0.0 to 10.0
 - `gate`: float, from 0.0 to 10.0
+- `limit`: int, from -40 to 12
 - Output mapping (e.g. `A1`, `B3`, etc.): boolean, depends on the Voicemeeter kind
 - `apply()`: Works similar to `vmr.apply()`
 ### `OutputBus`
