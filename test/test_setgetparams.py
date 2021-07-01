@@ -123,6 +123,55 @@ class TestSetAndGetParamsFloatWithAlias:
         tests.strip[2].A3 = False
         assert_equal(tests.strip[2].A3, False)
 
+    def test_it_sets_and_gets_input0_limit_minus_40(self):
+        tests.strip[0].limit = -40
+        assert_equal(tests.strip[0].limit, -40)
+
+    def test_it_sets_and_gets_input1_limit_minus_40(self):
+        tests.strip[1].limit = -40
+        assert_equal(tests.strip[1].limit, -40)
+
+    def test_it_sets_and_gets_input2_limit_minus_40(self):
+        tests.strip[2].limit = -40
+        assert_equal(tests.strip[2].limit, -40)
+
+    def test_it_sets_and_gets_input0_limit_12(self):
+        tests.strip[0].limit = 12
+        assert_equal(tests.strip[0].limit, 12)
+
+    def test_it_sets_and_gets_input1_limit_12(self):
+        tests.strip[1].limit = 12
+        assert_equal(tests.strip[1].limit, 12)
+
+    def test_it_sets_and_gets_input2_limit_12(self):
+        tests.strip[2].limit = 12
+        assert_equal(tests.strip[2].limit, 12)
+
+    def test_it_sets_and_gets_input0_gate_0(self):
+        tests.strip[0].gate = 0
+        assert_equal(tests.strip[0].gate, 0)
+
+    def test_it_sets_and_gets_input1_gate_0(self):
+        tests.strip[1].gate = 0
+        assert_equal(tests.strip[1].gate, 0)
+
+    def test_it_sets_and_gets_input2_gate_0(self):
+        tests.strip[2].gate = 0
+        assert_equal(tests.strip[2].gate, 0)
+
+    def test_it_sets_and_gets_input0_gate_10(self):
+        tests.strip[0].gate = 10
+        assert_equal(tests.strip[0].gate, 10)
+
+    def test_it_sets_and_gets_input1_gate_10(self):
+        tests.strip[1].gate = 10
+        assert_equal(tests.strip[1].gate, 10)
+
+    def test_it_sets_and_gets_input2_gate_10(self):
+        tests.strip[2].gate = 10
+        assert_equal(tests.strip[2].gate, 10)
+
+
 
     def test_it_sets_and_gets_output0_mute_on(self):
         tests.bus[0].mute = True
