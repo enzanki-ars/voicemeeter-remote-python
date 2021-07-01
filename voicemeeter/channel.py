@@ -60,7 +60,7 @@ def float_prop(param, p_range=None, normalize=False):
     return property(getter, setter)
 
 def int_prop(param, p_range=None):
-    """ A floating point VM parameter. """
+    """ An integer VM parameter. """
     lo, hi = p_range
     def getter(self):
         val = self.get(param)
