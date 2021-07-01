@@ -22,10 +22,10 @@ class InputStrip(Channel):
     solo = bool_prop('Solo')
     mute = bool_prop('Mute')
 
-    gain = float_prop('Gain', range=(-60,12))
-    comp = float_prop('Comp', range=(0,10))
-    gate = float_prop('Gate', range=(0,10))
-    limit = int_prop('Limit', range=(-40, 12))
+    gain = float_prop('Gain', p_range=(-60,12))
+    comp = float_prop('Comp', p_range=(0,10))
+    gate = float_prop('Gate', p_range=(0,10))
+    limit = int_prop('Limit', p_range=(-40, 12))
 
     label = str_prop('Label')
     device = str_prop('device.name')
