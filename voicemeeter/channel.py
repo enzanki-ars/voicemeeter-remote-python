@@ -58,3 +58,14 @@ def float_prop(param, range=None, normalize=False):
                 val = val*(hi-lo)+lo
         return self.set(param, val)
     return property(getter, setter)
+
+def int_prop(param, range=None):
+    """ A floating point VM parameter. """
+    def getter(self):
+        val = self.get(param)
+        if val not in range:
+            raise VMRError(f'Parameter {param} out of range {range}')
+        return int(val)
+    def setter(self, val):
+        return self.set(param, val)
+    return property(getter, setter)

@@ -1,5 +1,5 @@
 from .errors import VMRError
-from .channel import Channel, bool_prop, str_prop, float_prop
+from .channel import Channel, bool_prop, str_prop, float_prop, int_prop
 from . import kinds
 
 class InputStrip(Channel):
@@ -25,6 +25,7 @@ class InputStrip(Channel):
     gain = float_prop('Gain', range=(-60,12))
     comp = float_prop('Comp', range=(0,10))
     gate = float_prop('Gate', range=(0,10))
+    limit = int_prop('Limit', range=(-40, 12))
 
     label = str_prop('Label')
     device = str_prop('device.name')
