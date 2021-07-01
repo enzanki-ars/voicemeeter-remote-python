@@ -61,12 +61,12 @@ def float_prop(param, p_range=None, normalize=False):
 
 def int_prop(param, p_range=None):
     """ An integer VM parameter. """
-    lo, hi = p_range
     def getter(self):
         val = self.get(param)
-        if val not in range(lo, hi+1):
-            raise VMRError(f'Parameter {param} out of range {p_range}')
         return int(val)
     def setter(self, val):
+        lo, hi = p_range
+        if val not in range(lo, hi+1):
+            raise VMRError(f'Parameter {param} out of range {p_range}')
         return self.set(param, val)
     return property(getter, setter)
