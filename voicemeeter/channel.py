@@ -31,7 +31,7 @@ def bool_prop(param):
     def getter(self):
         return (self.get(param) == 1)
     def setter(self, val):
-        return self.set(param, 1 if val else 0)
+        self.set(param, 1 if val else 0)
     return property(getter, setter)
 
 def str_prop(param):
@@ -39,7 +39,7 @@ def str_prop(param):
     def getter(self):
         return self.get(param, string=True)
     def setter(self, val):
-        return self.set(param, val)
+        self.set(param, val)
     return property(getter, setter)
 
 def float_prop(param, p_range=None, normalize=False):
@@ -56,7 +56,7 @@ def float_prop(param, p_range=None, normalize=False):
             lo, hi = p_range
             if normalize:
                 val = val*(hi-lo)+lo
-        return self.set(param, val)
+        self.set(param, val)
     return property(getter, setter)
 
 def int_prop(param, p_range=None):
@@ -68,5 +68,5 @@ def int_prop(param, p_range=None):
         lo, hi = p_range
         if val not in range(lo, hi+1):
             raise VMRError(f'Parameter {param} out of range {p_range}')
-        return self.set(param, val)
+        self.set(param, val)
     return property(getter, setter)

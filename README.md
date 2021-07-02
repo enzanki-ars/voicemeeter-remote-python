@@ -31,8 +31,8 @@ pip install -e .['development']
 
 ## Usage
 You may use this wrapper in two ways.
-With a context manager, be aware that once your code leaves the scope of the with statement logout will be called
-automatically. Pass the vmr object to other classes and functions if you need to,
+With a context manager, be aware that once your code leaves the scope of the `with` statement logout will be called
+automatically. Pass the `vmr` object to other classes and functions if you need to,
 for example:
 
 ### Example 1
@@ -132,17 +132,21 @@ A *kind* specifies a major Voicemeeter version. Currently this encompasses
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
 
-#### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=5) -> 'instanceof(VMRemote)'`
+#### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=20) -> 'instanceof(VMRemote)'`
 Factory function for remotes.
 - delay: interval between polls
 - max_polls: maximum number of times a dirty parameter is polled.
 
-max_polls define the number of times dirty parameters are polled separated by a given delay interval. Since the time taken for the Voicemeeter background service to update the polling parameters varies this allows for a quicker response time up to a max delay.
+The Voicemeeter API in its lowest form does not manage syncing but does provide polling functions for a developer to implement in whichever way they see best. In this 
+Python wrapper syncing is managed using the `@polling` function decorator that wraps the getters. To modify the timings you may change the value of delay and max_polls.
 
-The wrapper passes 1000 unit test runs cleanly with default values but if you wish to alter these settings you may do so with argument variables to voicemeeter.remote.
-If changing either argument be aware that max delay on getters is defined as the product of delay and max_polls.
+max_polls define the number of times dirty parameters are polled separated by a given delay interval. Since the time taken for the Voicemeeter background service to update the polling parameters varies this allows for a variable response time up to a max delay.
 
 Setters and polling functions run without any delay.
+
+Default values are expected to be safe, in fact I've managed to get reliable test runs with faster settings but adjust according to your needs.
+
+If you wish to implement your own syncing logic simply remove the '@polling' decorator from the getter functions.
 
 ### `VMRemote` (higher level)
 #### `vmr.type`
