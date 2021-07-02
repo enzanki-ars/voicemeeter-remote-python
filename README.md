@@ -132,7 +132,7 @@ A *kind* specifies a major Voicemeeter version. Currently this encompasses
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
 
-#### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=20) -> 'instanceof(VMRemote)'`
+#### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=8) -> 'instanceof(VMRemote)'`
 Factory function for remotes.
 - delay: interval between polls
 - max_polls: maximum number of times a dirty parameter is polled.
@@ -140,11 +140,11 @@ Factory function for remotes.
 The Voicemeeter API in its lowest form does not manage syncing but does provide polling functions for a developer to implement in whichever way they see best. In this 
 Python wrapper syncing is managed using the `@polling` function decorator that wraps the getters. To modify the timings you may change the value of delay and max_polls.
 
-max_polls define the number of times dirty parameters are polled separated by a given delay interval. Since the time taken for the Voicemeeter background service to update the polling parameters varies this allows for a variable response time up to a max delay.
+max_polls define the number of times dirty parameters are polled separated by a given delay interval.
 
 Setters and polling functions run without any delay.
 
-Default values are expected to be safe, in fact I've managed to get reliable test runs with faster settings but adjust according to your needs.
+Default values are expected to be safe but adjust according to your needs.
 
 If you wish to implement your own syncing logic simply remove the '@polling' decorator from the getter functions.
 

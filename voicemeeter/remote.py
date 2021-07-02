@@ -233,7 +233,7 @@ def _make_remote(kind) -> 'instanceof(VMRemote)':
 
 _remotes = {kind.id: _make_remote(kind) for kind in kinds.all}
 
-def connect(kind_id, delay: float=.001, max_polls: int=20):
+def connect(kind_id, delay: float=.001, max_polls: int=8):
     """ Connect to Voicemeeter and sets its strip layout. """
     try:
         cls = _remotes[kind_id]

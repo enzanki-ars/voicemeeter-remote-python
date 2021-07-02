@@ -242,9 +242,9 @@ class TestVbanIntParams:
         tests.vban_in[1].route = 3
         assert_equal(tests.vban_in[1].route, 3)
 
-    def test_it_sets_and_gets_vban_instream1_route_5(self):
-        tests.vban_in[1].route = 5
-        assert_equal(tests.vban_in[1].route, 5)
+    def test_it_sets_and_gets_vban_instream1_route_4(self):
+        tests.vban_in[1].route = 4
+        assert_equal(tests.vban_in[1].route, 4)
 
     def test_it_sets_and_gets_vban_outstream0_route_0(self):
         tests.vban_out[0].route = 0
@@ -258,6 +258,6 @@ class TestVbanIntParams:
         tests.vban_out[1].route = 2
         assert_equal(tests.vban_out[1].route, 2)
 
-    def test_it_sets_and_gets_vban_outstream1_route_5(self):
-        tests.vban_out[1].route = 5
-        assert_equal(tests.vban_out[1].route, 5)
+    def test_it_sets_and_gets_vban_outstream1_route_4(self):
+        tests.vban_out[1].route = 4
+        assert_equal(tests.vban_out[1].route, 4)
