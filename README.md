@@ -142,11 +142,12 @@ Python wrapper syncing is managed using the `@polling` function decorator that w
 
 max_polls define the number of times dirty parameters are polled separated by a given delay interval.
 
-Setters and polling functions run without any delay.
+Setters run without any delay.
 
-Default values are expected to be safe but adjust according to your needs.
+Default values are expected to be safe but adjust according to your needs. To be sure the wrapper is properly synced you may use the testing suite included in the github
+files.
 
-If you wish to implement your own syncing logic simply remove the '@polling' decorator from the getter functions.
+If you wish to implement your own syncing logic altogether, simply remove the `@polling` decorator from the getter functions.
 
 ### `VMRemote` (higher level)
 #### `vmr.type`
