@@ -132,7 +132,7 @@ A *kind* specifies a major Voicemeeter version. Currently this encompasses
 #### `voicemeeter.launch(kind_id, delay=1)`
 Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the front. Wait for `delay` seconds after a launch is dispatched.
 
-#### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=8) -> 'instanceof(VMRemote)'`
+#### `voicemeeter.remote(kind_id, delay: float=.005, max_polls: int=8) -> 'instanceof(VMRemote)'`
 Factory function for remotes.
 - delay: interval between polls
 - max_polls: maximum number of times a dirty parameter is polled.
