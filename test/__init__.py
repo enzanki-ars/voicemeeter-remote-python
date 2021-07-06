@@ -1,6 +1,6 @@
 import voicemeeter
 
-DELAY = 0.005
+DELAY = 0.001
 MAX_POLLS = 8
 
 kind = 'banana'
