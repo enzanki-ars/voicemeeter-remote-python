@@ -142,8 +142,8 @@ Launches Voicemeeter. If Voicemeeter is already launched, it is brought to the f
 
 #### `voicemeeter.remote(kind_id, delay: float=.001, max_polls: int=8) -> 'instanceof(VMRemote)'`
 Factory function for remotes.
-- delay: interval between polls
-- max_polls: maximum number of times a dirty parameter is polled.
+- `delay`: interval between polls
+- `max_polls`: maximum number of times a dirty parameter is polled.
 
 The Voicemeeter API in its lowest form does not manage syncing but does provide polling functions for a developer to implement in whichever way they see best. In this 
 Python wrapper syncing is managed using the `@polling` function decorator that wraps the getters. To modify the timings you may change the value of delay and max_polls.
@@ -254,15 +254,15 @@ Example:
 
 ### `VBAN`
 For each vban in/out stream the following parameters are defined:
-- on: boolean
-- name: string
-- ip: string
-- port: int from 1024 - 65535
-- sr: int (11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000)
-- channel: int from 1 to 8
-- bit: int 16 or 24
-- quality: int from 0 to 4
-- route: int from 0 to 8
+- `on`: boolean
+- `name`: string
+- `ip`: string
+- `port`: int from 1024 - 65535
+- `sr`: int (11025, 16000, 22050, 24000, 32000, 44100, 48000, 64000, 88200, 96000)
+- `channel`: int from 1 to 8
+- `bit`: int 16 or 24
+- `quality`: int from 0 to 4
+- `route`: int from 0 to 8
 
 SR, channel and bit are defined as readonly for instreams. Attempting to write
 to those parameters will throw an error. They are read and write for outstreams.
@@ -290,7 +290,7 @@ Calls the C API's parameter setters, `SetParameterFloat` or `SetParameterStringW
 - `errors.VMRError`: Base Voicemeeter Remote error class.
 - `errors.VMRDriverError`: Raised when a C API function returns an unexpected value.
 
-### Tests
+### `Tests`
 First make sure you installed the [development dependencies](https://github.com/onyx-and-iris/voicemeeter-remote-python#installation)
 
 Isolate tests using the `@nottest` decorator before each test class.
