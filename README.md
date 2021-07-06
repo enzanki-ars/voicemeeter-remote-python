@@ -31,7 +31,9 @@ pip install -e .['development']
 
 ## Usage
 You may use this wrapper in two ways.
-With a context manager, be aware that once your code leaves the scope of the `with` statement logout will be called
+
+#### With a context manager:
+Be aware that once your code leaves the scope of the `with` statement logout will be called
 automatically. Pass the `vmr` object to other classes and functions if you need to,
 for example:
 
@@ -68,8 +70,11 @@ if __name__ == '__main__':
     main()
 ```
 
-Or perform setup/teardown independently, if using this way you MUST call `login()`
-once at the start of your code and `logout()` once at the end.
+#### Or perform setup/teardown independently:
+If using this way you MUST call `login()`
+once at the start of your code and `logout()` once at the end,
+for example:
+
 ### Example 2
 ```python
 import voicemeeter
@@ -80,6 +85,8 @@ kind = 'potato'
 voicemeeter.launch(kind)
 
 vmr = voicemeeter.remote(kind)
+
+# call login() at the start of your code
 vmr.login()
 
 # Toggle mute for leftmost input strip
@@ -88,6 +95,7 @@ vmr.strip[0].mute = not vmr.strip[0].mute
 # Toggle eq for leftmost output bus
 vmr.bus[0].eq = not vmr.bus[0].eq
 
+# call logout() at the end of your code
 vmr.logout()
 ```
 
