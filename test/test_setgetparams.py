@@ -378,6 +378,14 @@ class TestSetAndGetParamsStringWithAlias:
         tests.strip[0].label = 'test0'
         assert_equal(tests.strip[0].label, 'test0')
         
+    def test_it_sets_and_gets_input0_label_test1(self):
+        tests.strip[0].label = 'test1'
+        assert_equal(tests.strip[0].label, 'test1')
+     
+    def test_it_sets_and_gets_input1_label_test0(self):
+        tests.strip[1].label = 'test0'
+        assert_equal(tests.strip[1].label, 'test0')
+        
     def test_it_sets_and_gets_input1_label_test1(self):
         tests.strip[1].label = 'test1'
         assert_equal(tests.strip[1].label, 'test1')
@@ -386,21 +394,29 @@ class TestSetAndGetParamsStringWithAlias:
         tests.bus[0].label = 'test0'
         assert_equal(tests.bus[0].label, 'test0')
         
+    def test_it_sets_and_gets_output0_label_test1(self):
+        tests.bus[0].label = 'test1'
+        assert_equal(tests.bus[0].label, 'test1')
+        
+    def test_it_sets_and_gets_output1_label_test0(self):
+        tests.bus[1].label = 'test0'
+        assert_equal(tests.bus[1].label, 'test0')
+        
     def test_it_sets_and_gets_output1_label_test1(self):
         tests.bus[1].label = 'test1'
         assert_equal(tests.bus[1].label, 'test1')
         
-    def test_it_sets_and_gets_input0_device(self):
+    def test_it_gets_input0_device(self):
         assert_equal(tests.strip[0].device, 'CABLE Output (VB-Audio Virtual Cable)')
         
-    def test_it_sets_and_gets_output0_device(self):
+    def test_it_gets_output0_device(self):
         assert_equal(tests.bus[0].device, 'CABLE-A Input (VB-Audio Cable A)')
         
-    def test_it_sets_and_gets_output4_device(self):
+    def test_it_gets_output4_device(self):
         assert_equal(tests.bus[4].device, 'CABLE-B Input (VB-Audio Cable B)')
         
-    def test_it_sets_and_gets_input0_samplerate_48000(self):
+    def test_it_gets_input0_samplerate_48000(self):
         assert_equal(tests.strip[0].sr, '48000.000')
         
-    def test_it_sets_and_gets_output0_samplerate_48000(self):
+    def test_it_gets_output0_samplerate_48000(self):
         assert_equal(tests.bus[0].sr, '48000.000')
