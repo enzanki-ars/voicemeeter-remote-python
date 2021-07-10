@@ -193,6 +193,8 @@ Resets everything to the `base` profile.
 ### `InputStrip`
 Any property is gettable and settable.
 - `label`: string
+- `device`: string
+- `sr`: string
 - `solo`: boolean
 - `mute`: boolean
 - `gain`: float, from -60.0 to 12.0
@@ -203,6 +205,9 @@ Any property is gettable and settable.
 - `apply()`: Works similar to `vmr.apply()`
 ### `OutputBus`
 Any property is gettable and settable.
+- `label`: string
+- `device`: string
+- `sr`: string
 - `mute`: boolean
 - `eq`: boolean
 - `gain`: float, from -60.0 to 12.0
