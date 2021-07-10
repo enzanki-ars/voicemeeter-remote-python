@@ -23,6 +23,10 @@ class OutputBus(Channel):
     mono = bool_prop('Mono')
     eq = bool_prop('EQ.on')
 
+    label = str_prop('Label')
+    device = str_prop('device.name')
+    sr = str_prop('device.sr')
+
 class PhysicalOutputBus(OutputBus):
     pass
 
